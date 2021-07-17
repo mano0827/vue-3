@@ -74,39 +74,37 @@ export default {
       } else if (this.filter === "active") {
         return this.todos.filter((todo) => {
           return todo.statusBtn === "作業中";
-        })
-      } 
-      else{
+        });
+      } else {
         return this.todo.statusBtn === "";
       }
     },
+  },
+  methods: {
+    addTask: function () {
+      let item = {
+        id: this.id++,
+        title: this.newTask,
+        statusBtn: "作業中",
+        delBtn: "削除",
+      };
+      this.todos.push(item);
+      this.newTask = "";
     },
-    methods: {
-      addTask: function () {
-        let item = {
-          id: this.id++,
-          title: this.newTask,
-          statusBtn: "作業中",
-          delBtn: "削除",
-        };
-        this.todos.push(item);
-        this.newTask = "";
-      },
-      statusChange: function (id) {
-        for (let todo of this.todos) {
-          if (todo.id === id) {
-            if (todo.statusBtn === "作業中") {
-              todo.statusBtn = "完了";
-            } else {
-              todo.statusBtn = "作業中";
-            }
-            break;
+    statusChange: function (id) {
+      this.todos.forEach(function (todo) {
+        if (todo.id === id) {
+          if (todo.statusBtn === "作業中") {
+            todo.statusBtn = "完了";
+          } else {
+            todo.statusBtn = "作業中";
           }
         }
-      },
-      deleteTask: function (index) {
-        this.todos.splice(index, 1);
-      },
+      });
     },
+    deleteTask: function (index) {
+      this.todos.splice(index, 1);
+    },
+  },
 };
 </script>
